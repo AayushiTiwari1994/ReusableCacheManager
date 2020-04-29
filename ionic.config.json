@@ -1,5 +1,7 @@
 {
   "name": "reusableCacheManager",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
