@@ -54,10 +54,6 @@ export class AppService {
     toast.then(toast => toast.present());
   }
 
-  public onNetworkChange(): Observable<ConnectionStatus> {
-    return this.status.asObservable();
-  }
-
   public getCurrentNetworkStatus(): ConnectionStatus {
     return this.status.getValue();
   }

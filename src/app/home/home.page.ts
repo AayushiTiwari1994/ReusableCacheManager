@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { CacheManagerService } from '../cache-manager.service';
-import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +21,10 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     private cacheService: CacheManagerService,
-    private networkSerice: AppService,
     private toastCtrl: ToastController, ) { }
 
   fetchData(event) {
-      this.cacheService.loadData(event.target.value, this.url).subscribe(data => {
+    this.cacheService.loadData(event.target.value, this.url).subscribe(data => {
       let records = data.data;
       if (records.length > 0) {
         this.users = records;

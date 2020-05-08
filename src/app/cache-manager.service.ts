@@ -13,9 +13,8 @@ import { from } from 'rxjs';
   providedIn: 'root'
 })
 export class CacheManagerService {
-
-  datas: Observable<any>;
-  dataKey = "data-key";
+  private datas: Observable<any>;
+  private dataKey = "data-key";
 
   constructor(private http: Http,
     private cache: CacheService,
@@ -52,25 +51,18 @@ export class CacheManagerService {
         position: 'bottom'
       });
       toast.then(toast => toast.present());
-
       let delayType = 'none';
-      this.datas = this.cache.loadFromDelayedObservable(url, req, this.dataKey, ttl * 2000, delayType);
-
+      this.datas = from(this.cache.loadFromDelayedObservable(url, req, this.dataKey, ttl * 2000, delayType));
     }
     return this.datas;
   }
-
-
-  async presentAlert() {
+  private async presentAlert() {
     let toast = await this.toastCtrl.create({
       message: 'New data from API loaded',
       duration: 2000
     })
     toast.present();
 
-  }
-  invalidateCache() {
-    this.cache.clearGroup(this.dataKey);
   }
 
 }

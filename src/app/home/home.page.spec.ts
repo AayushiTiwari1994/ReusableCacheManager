@@ -1,7 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 
 import { HomePage } from './home.page';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injectable } from '@angular/core';
+import { CacheManagerService } from '../cache-manager.service';
+import { AppService } from '../app.service';
+import { RouterModule, UrlSerializer } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Location, CommonModule } from '@angular/common';
+import { of } from 'rxjs';
+
+@Injectable()
+class MockCacheManagerService {
+  loadData() {
+    return of({})
+  }
+}
+
+@Injectable()
+class MockAppService { }
+
+@Injectable()
+class MockLocation { }
+
+@Injectable()
+class MockUrlSerializer { }
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -9,8 +32,15 @@ describe('HomePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomePage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [HomePage],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      imports: [IonicModule.forRoot(), RouterModule,
+        IonicModule, FormsModule, CommonModule],
+      providers: [{ provide: CacheManagerService, useClass: MockCacheManagerService },
+      { provide: AppService, useClass: MockAppService },
+      { provide: Location, useClass: MockLocation },
+      { provide: UrlSerializer, useClass: MockUrlSerializer }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
@@ -19,6 +49,45 @@ describe('HomePage', () => {
   }));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it('should fetch data', async () => {
+
+    const cacheService = TestBed.get(CacheManagerService);
+    let event = { target: { value: 3 } }
+    let app = fixture.debugElement.componentInstance;
+    app.url = 'sdhfhdsg'
+
+    spyOn(cacheService, 'loadData').and.callFake(() =>
+      of({
+        data: [{}, {}, {}, {}, {}]
+      })
+    );
+    app.fetchData(event);
+    expect(app.fetchData).toBeTruthy();
+    expect(cacheService.loadData).toHaveBeenCalled();
+    expect(app.users.length).toEqual(5);
+  });
+
+  it('should show error', async () => {
+    const toastCntrl = TestBed.get(ToastController)
+    const cacheService = TestBed.get(CacheManagerService);
+    let event = { target: { value: 3 } }
+    let app = fixture.debugElement.componentInstance;
+    app.url = 'sdhfhdsg'
+
+    spyOn(cacheService, 'loadData').and.callFake(() =>
+      of({
+        data: []
+      })
+    );
+    spyOn(toastCntrl, 'create').and.callFake(() => of({}).toPromise());
+    app.fetchData(event);
+    expect(app.fetchData).toBeTruthy();
+    expect(cacheService.loadData).toHaveBeenCalled();
+    expect(app.users.length).toEqual(0);
+    expect(toastCntrl.create).toHaveBeenCalled();
   });
 });
