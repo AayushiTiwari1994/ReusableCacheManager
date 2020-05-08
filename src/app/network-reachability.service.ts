@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { ToastController, Platform } from '@ionic/angular';
 
 
@@ -13,7 +13,7 @@ export enum ConnectionStatus {
 })
 
 // Service to check status of the network
-export class AppService {
+export class NetworkReachabilityService {
 
   private status: BehaviorSubject<ConnectionStatus> = new BehaviorSubject(ConnectionStatus.Offline);
 

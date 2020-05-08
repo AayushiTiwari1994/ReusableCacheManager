@@ -4,8 +4,8 @@ import { Http } from '@angular/http';
 import { CacheService } from 'ionic-cache';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { AppService, ConnectionStatus } from './app.service';
 import { from } from 'rxjs';
+import { NetworkReachabilityService,ConnectionStatus } from './network-reachability.service';
 
 // Reusable cache manager component
 
@@ -19,7 +19,7 @@ export class CacheManagerService {
   constructor(private http: Http,
     private cache: CacheService,
     private toastCtrl: ToastController,
-    private networkSevice: AppService, ) { }
+    private networkSevice: NetworkReachabilityService) { }
 
   loadData(checkCondition, url?) {
     // fetching data from the url
@@ -62,7 +62,5 @@ export class CacheManagerService {
       duration: 2000
     })
     toast.present();
-
   }
-
 }

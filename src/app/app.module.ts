@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CacheModule } from "ionic-cache";
 import {  HttpModule } from '@angular/http';
 import { Network } from '@ionic-native/network/ngx';
-import { AppService } from './app.service';
+import { NetworkReachabilityService } from './network-reachability.service';
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { AppService } from './app.service';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Network,
-    AppService
+    NetworkReachabilityService
   ],
   bootstrap: [AppComponent]
 })
