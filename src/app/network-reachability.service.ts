@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ToastController, Platform } from '@ionic/angular';
-
 
 export enum ConnectionStatus {
   Online,

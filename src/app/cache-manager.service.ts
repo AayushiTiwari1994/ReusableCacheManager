@@ -5,7 +5,7 @@ import { CacheService } from 'ionic-cache';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { from } from 'rxjs';
-import { NetworkReachabilityService,ConnectionStatus } from './network-reachability.service';
+import { NetworkReachabilityService, ConnectionStatus } from './network-reachability.service';
 
 // Reusable cache manager component
 
@@ -21,8 +21,8 @@ export class CacheManagerService {
     private toastCtrl: ToastController,
     private networkSevice: NetworkReachabilityService) { }
 
+  // fetching data from the url
   loadData(checkCondition, url?) {
-    // fetching data from the url
     let req = this.http.get(url).pipe(map(
       response => {
         return response.json();
@@ -38,10 +38,8 @@ export class CacheManagerService {
     else if (checkCondition == 3) {
       if (this.networkSevice.getCurrentNetworkStatus() == ConnectionStatus.Online) {
         this.datas = from(req);
-        console.log("this.data====", this.datas);
         this.presentAlert()
       } else {
-        console.log("ntwork status", this.networkSevice.getCurrentNetworkStatus());
         this.datas = from([]);
       }
     } else {

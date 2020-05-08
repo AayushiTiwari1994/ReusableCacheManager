@@ -17,8 +17,7 @@ export class HomePage {
   ];
 
   private url = 'https://reqres.in/api/users?per_page=10&page=1';
-  place: any;
-
+ 
   constructor(public navCtrl: NavController,
     private cacheService: CacheManagerService,
     private toastCtrl: ToastController, ) { }
@@ -45,5 +44,4 @@ export class HomePage {
       toast.then(toast => toast.present());
     })
   }
-
 }

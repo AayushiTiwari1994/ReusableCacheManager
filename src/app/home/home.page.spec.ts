@@ -4,11 +4,11 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { HomePage } from './home.page';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injectable } from '@angular/core';
 import { CacheManagerService } from '../cache-manager.service';
-import { AppService } from '../app.service';
 import { RouterModule, UrlSerializer } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Location, CommonModule } from '@angular/common';
 import { of } from 'rxjs';
+import { NetworkReachabilityService } from '../network-reachability.service';
 
 @Injectable()
 class MockCacheManagerService {
@@ -18,7 +18,7 @@ class MockCacheManagerService {
 }
 
 @Injectable()
-class MockAppService { }
+class MocNetworkReachabilityService{ }
 
 @Injectable()
 class MockLocation { }
@@ -37,7 +37,7 @@ describe('HomePage', () => {
       imports: [IonicModule.forRoot(), RouterModule,
         IonicModule, FormsModule, CommonModule],
       providers: [{ provide: CacheManagerService, useClass: MockCacheManagerService },
-      { provide: AppService, useClass: MockAppService },
+      { provide: NetworkReachabilityService, useClass: MocNetworkReachabilityService },
       { provide: Location, useClass: MockLocation },
       { provide: UrlSerializer, useClass: MockUrlSerializer }
       ]

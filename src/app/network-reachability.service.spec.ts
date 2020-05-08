@@ -12,8 +12,7 @@ describe('NetworkReachabilityService', () => {
   }
   beforeEach(() => {TestBed.configureTestingModule({
     providers: [Network, Platform],
-  })
-
+  });
 });
 
   it('should be created', () => {
@@ -29,6 +28,5 @@ describe('NetworkReachabilityService', () => {
     spyOn(service, 'initializeNetworkEvents').and.callFake(() => { });
     spyOn(network, 'onConnect').and.callFake(() => of(ConnectionStatus.Online));
     spyOn(network, 'onDisconnect').and.callFake(() => of({}));
-
   })
 });

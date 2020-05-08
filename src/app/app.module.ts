@@ -19,7 +19,6 @@ import { NetworkReachabilityService } from './network-reachability.service';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     CacheModule.forRoot({ keyPrefix: 'my-app-cache' }),
-    
     HttpModule
   ],
   providers: [
